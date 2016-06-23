@@ -68,6 +68,9 @@ class CodeSnifferHandler extends ToolHandler
 
                 if (false === $phpCs->isSuccessful()) {
                     $output = $phpCs->getOutput();
+                    echo "\n\n";
+                    echo $output;
+                    echo "\n\n";
                     if (strpos($output, '0 ERRORS')) {
                         $this->outputHandler->setError($output);
                         $this->output->writeln($this->outputHandler->getError());
