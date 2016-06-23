@@ -67,11 +67,13 @@ class CodeSnifferHandler extends ToolHandler
                 $phpCs->run();
 
                 if (false === $phpCs->isSuccessful()) {
-                    $this->outputHandler->setError($phpCs->getOutput());
-                    $this->output->writeln($this->outputHandler->getError());
-                    $this->output->writeln(BadJobLogo::paint($messages[MessageConfigData::KEY_ERROR_MESSAGE]));
-
-                    throw new InvalidCodingStandardException();
+                    $output = $phpCs->getOutput();
+                    if (strpos($output, '0 ERRORS')) {
+                        $this->outputHandler->setError($output);
+                        $this->output->writeln($this->outputHandler->getError());
+                        $this->output->writeln(BadJobLogo::paint($messages[MessageConfigData::KEY_ERROR_MESSAGE]));
+                        throw new InvalidCodingStandardException();
+                    }
                 }
             }
         }
